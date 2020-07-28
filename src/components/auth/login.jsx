@@ -13,7 +13,8 @@ const Login = (props) => {
                 const res = await httpLogin(email, password);
                 if (res && res.status === 200) {
                     await localStorage.setItem('token', res.headers['x-auth']);
-                    props.history.replcae('/');
+
+                    props.history.replace('/');
                 }
             } else {
                 notify('warning', 'لطفا تمام فیلد ها را پر کنید');

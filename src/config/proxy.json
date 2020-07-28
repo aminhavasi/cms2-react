@@ -1,4 +1,6 @@
 {
     "api_register": "http://localhost:5000/api/auth/register",
-    "api_login": "http://localhost:5000/api/auth/login"
+    "api_login": "http://localhost:5000/api/auth/login",
+    "api_recovery": "http://localhost:5000/api/auth/recovery",
+    "api_reset": "http://localhost:5000/api/auth/reset"
 }
