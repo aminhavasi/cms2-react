@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../css/auth.css';
 import { Link } from 'react-router-dom';
-const Login = () => {
+import { httpLogin } from '../../services/httpAuth';
+import { notify } from '../../toast/toast';
+const Login = (props) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const handle = async (e) => {
+        e.preventDefault();
+        try {
+            if (email && password) {
+                const res = await httpLogin(email, password);
+                if (res && res.status === 200) {
+                    await localStorage.setItem('token', res.headers['x-auth']);
+                    props.history.replcae('/');
+                }
+            } else {
+                notify('warning', 'لطفا تمام فیلد ها را پر کنید');
+            }
+        } catch (err) {
+            if (err.response) {
+                notify('error', err.response.data);
+            }
+        }
+    };
     return (
         <div>
             <div className="sidenav ">
@@ -10,21 +32,21 @@ const Login = () => {
                         Login From Page
                         <br />
                     </h2>
-                    <p className="lead">
-                        Login or register from here to access.
-                    </p>
+                    <p className="lead">Login from here to access.</p>
                 </div>
             </div>
             <div className="main">
                 <div className="col-md-6 col-sm-12">
                     <div className="login-form ">
-                        <form className="my-3">
+                        <form onSubmit={(e) => handle(e)} className="my-3">
                             <div className="form-group">
-                                <label>نام کاربری:</label>
+                                <label>ایمیل:</label>
                                 <input
-                                    type="text"
+                                    type="email"
                                     className="form-control"
-                                    placeholder="نام کاربری"
+                                    placeholder="Example@info.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                             <div className="form-group">
@@ -32,7 +54,11 @@ const Login = () => {
                                 <input
                                     type="password"
                                     className="form-control"
-                                    placeholder="Password"
+                                    placeholder="********"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
                                 />
                             </div>
                             <button
@@ -42,7 +68,9 @@ const Login = () => {
                                 Login
                             </button>
                             <br />
-                            <Link>forget password?</Link>
+                            <Link to="/recovery">forget password?</Link>
+                            <br />
+                            <Link to="/register">ایا شما اکانتی ندارید؟</Link>
                         </form>
                     </div>
                 </div>

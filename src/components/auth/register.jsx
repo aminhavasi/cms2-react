@@ -30,12 +30,10 @@ const Register = (props) => {
             <div className="sidenav ">
                 <div className="login-main-text">
                     <h2>
-                        Login From Page
+                        Register From Page
                         <br />
                     </h2>
-                    <p className="lead">
-                        Login or register from here to access.
-                    </p>
+                    <p className="lead">register from here to access.</p>
                 </div>
             </div>
             <div className="main">
@@ -83,7 +81,9 @@ const Register = (props) => {
                                 Register
                             </button>
                             <br />
-                            <Link to="/recovery">forget password?</Link>
+                            <Link to="/login">
+                                ایا شما قبلا حساب کاربری داشته اید؟
+                            </Link>
                         </form>
                     </div>
                 </div>
